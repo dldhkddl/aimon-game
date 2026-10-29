@@ -1,0 +1,1048 @@
+/* ══════════════════════════════════════════
+   ROOT VARIABLES
+══════════════════════════════════════════ */
+.mp-root {
+  --mp-bg-deep: #eae3f3;
+  --mp-bg-card: #1a1430;
+  --mp-purple-neon: #9b5de5;
+  --mp-purple-mid: #7b2ff7;
+  --mp-purple-soft: #c77dff;
+  --mp-purple-glow: rgba(155, 93, 229, 0.45);
+  --mp-yellow: #ffd60a;
+  --mp-white: #f0eeff;
+  --mp-text-dim: #8b7ec8;
+  --mp-border: rgba(155, 93, 229, 0.35);
+  --mp-radius-xl: 22px;
+  --mp-radius-lg: 16px;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background: var(--mp-bg-deep);
+  color: var(--mp-white);
+  font-family: 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  padding: 0 10px 8px;
+  overflow: hidden;
+  background-image:
+    radial-gradient(ellipse 80% 35% at 50% 0%, rgba(123, 47, 247, 0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 20% at 80% 100%, rgba(155, 93, 229, 0.12) 0%, transparent 60%);
+}
+
+/* ══════════════════════════════════════════
+   BACK BUTTON
+══════════════════════════════════════════ */
+.mp-back {
+  align-self: flex-start;
+  background: none;
+  border: 1px solid var(--mp-border);
+  border-radius: 10px;
+  color: var(--mp-text-dim);
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.mp-back:hover {
+  color: var(--mp-white);
+  border-color: var(--mp-purple-soft);
+}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.mp-hero {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -15px;
+  padding-bottom: 2px;
+  position: relative;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.mp-hero::before {
+  content: '';
+  position: absolute;
+  width: 120px;
+  height: 40px;
+  background: radial-gradient(ellipse, rgba(123, 47, 247, 0.3) 0%, transparent 70%);
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.mp-hero-char {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 12px rgba(155, 93, 229, 0.8)) drop-shadow(0 0 24px rgba(123, 47, 247, 0.4));
+  animation: mpFloat 3.2s ease-in-out infinite;
+  transition: filter 0.2s;
+}
+
+.mp-hero-char:hover {
+  filter: drop-shadow(0 0 18px rgba(155, 93, 229, 1)) drop-shadow(0 0 36px rgba(123, 47, 247, 0.7));
+}
+
+
+.mp-char-hint {
+  font-size: 0.58rem;
+  color: var(--mp-text-dim);
+  margin-top: 2px;
+}
+
+@keyframes mpFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* ══════════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════════ */
+.mp-dashboard {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(26, 20, 48, 0.9);
+  border: 1.5px solid var(--mp-border);
+  border-radius: var(--mp-radius-lg);
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  margin: 5px 0 6px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(155, 93, 229, 0.15);
+  flex-shrink: 0;
+}
+
+.mp-dash-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.mp-dash-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.mp-dash-icon.score-ico {
+  background: rgba(255, 214, 10, 0.15);
+}
+
+.mp-dash-icon.time-ico {
+  background: rgba(155, 93, 229, 0.2);
+}
+
+.mp-dash-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.mp-dash-label {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--mp-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.mp-dash-val {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--mp-white);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.mp-dash-val.time-color {
+  color: #a0a0a0;    /* 회색 글씨로 변경 */
+  font-size: 0.9rem; /* 기존 1.05rem에서 줄임 */
+  opacity: 0.5;      /* 더 투명하게 설정 */
+}
+
+.mp-dash-sep {
+  width: 1px;
+  height: 28px;
+  background: var(--mp-border);
+  margin: 0 8px;
+  flex-shrink: 0;
+}
+
+.mp-btn-restart {
+  background: linear-gradient(135deg, #7b2ff7 0%, #9b5de5 50%, #c77dff 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 7px 12px;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 0 14px rgba(155, 93, 229, 0.5);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.mp-btn-restart:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+.mp-btn-restart:active {
+  transform: scale(0.95);
+}
+
+/* ══════════════════════════════════════════
+   PROGRESS
+══════════════════════════════════════════ */
+.mp-progress-wrap {
+  width: 100%;
+  max-width: 520px;
+  height: 4px;
+  background: rgba(155, 93, 229, 0.15);
+  border-radius: 99px;
+  margin-bottom: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.mp-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--mp-purple-mid), var(--mp-purple-soft));
+  border-radius: 99px;
+  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 6px var(--mp-purple-glow);
+}
+
+/* ══════════════════════════════════════════
+   GRID
+══════════════════════════════════════════ */
+.mp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 6px;
+  width: 100%;
+  max-width: 520px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ══════════════════════════════════════════
+   CARD
+══════════════════════════════════════════ */
+.mp-card {
+  height: 100%;
+  perspective: 1400px;
+  cursor: pointer;
+  position: relative;
+  min-height: 0;
+}
+
+.mp-card:hover:not(.flipped):not(.matched) .mp-card-inner {
+  transform: translateY(-6px) scale(1.04) rotateX(8deg);
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 10px rgba(155, 93, 229, 0.55));
+}
+
+.mp-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.48s cubic-bezier(0.4, 0.2, 0.2, 1);
+  border-radius: var(--mp-radius-lg);
+  transform-origin: center bottom;
+}
+
+.mp-card.flipped .mp-card-inner {
+  transform: rotateY(180deg);
+}
+
+.mp-card.matched {
+  pointer-events: none;
+  animation: mpMatchPop 0.55s ease forwards;
+}
+
+@keyframes mpMatchPop {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  40% {
+    opacity: 1;
+    transform: scale(1.09);
+    filter: brightness(1.4) drop-shadow(0 0 14px #c77dff);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.68);
+  }
+}
+
+.mp-card.wrong .mp-card-inner {
+  animation: mpWrongShake 0.4s ease;
+}
+
+@keyframes mpWrongShake {
+
+  0%,
+  100% {
+    transform: rotateY(180deg) translateX(0);
+  }
+
+  25% {
+    transform: rotateY(180deg) translateX(-5px);
+  }
+
+  75% {
+    transform: rotateY(180deg) translateX(5px);
+  }
+}
+
+/* ── SHARED FACE ── */
+.mp-card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--mp-radius-lg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── BACK ── */
+.mp-card-back {
+  background: linear-gradient(160deg, #453391 0%, #513a8f 55%, #524292 100%);
+  border: 1.5px solid rgba(164, 111, 230, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -5px 10px rgba(0, 0, 0, 0.32),
+    inset 4px 0 8px rgba(0, 0, 0, 0.12),
+    0 3px 0 #362a70,
+    0 6px 0 #2a1f5c,
+    0 14px 22px rgba(0, 0, 0, 0.45);
+  gap: 0;
+}
+
+.mp-card-back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(155, 93, 229, 0.22) 1px, transparent 1px);
+  background-size: 13px 13px;
+  border-radius: var(--mp-radius-lg);
+  pointer-events: none;
+}
+
+.mp-card-back::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.24) 0%, transparent 30%, transparent 70%, rgba(255, 255, 255, 0.06) 100%);
+  border-radius: var(--mp-radius-lg);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 3;
+}
+
+.mp-spark {
+  position: absolute;
+  font-size: 0.5rem;
+  color: rgba(199, 125, 255, 0.55);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.mp-spark-tl {
+  top: 6px;
+  left: 7px;
+}
+
+.mp-spark-tr {
+  top: 6px;
+  right: 7px;
+}
+
+.mp-spark-bl {
+  bottom: 6px;
+  left: 7px;
+}
+
+.mp-spark-br {
+  bottom: 6px;
+  right: 7px;
+}
+
+.mp-card-back-img {
+  width: 55%;
+  max-height: 60%;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 4px 12px rgba(123, 47, 247, 0.65));
+}
+
+/* ── FRONT ── */
+.mp-card-front {
+  background: linear-gradient(160deg, #fdfbff 0%, #f4f0ff 55%, #e9e1fb 100%);
+  border: 1.5px solid rgba(155, 93, 229, 0.25);
+  transform: rotateY(180deg);
+  padding: 5px 5px 4px;
+  justify-content: flex-start;
+  gap: 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -4px 8px rgba(123, 47, 247, 0.08),
+    0 3px 0 #d9cdf2,
+    0 6px 0 #c8b8ea,
+    0 14px 22px rgba(74, 30, 130, 0.28);
+}
+
+.mp-card-front::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.55) 0%, transparent 28%, transparent 72%, rgba(123, 47, 247, 0.05) 100%);
+  border-radius: var(--mp-radius-lg);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.mp-card-badge {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 1px 7px;
+  border-radius: 99px;
+  line-height: 1.6;
+  margin-bottom: 3px;
+  flex-shrink: 0;
+}
+
+.badge-concept {
+  background: #7b2ff7;
+  color: #fff;
+}
+
+.badge-analogy {
+  background: #ff6b35;
+  color: #fff;
+}
+
+.mp-card-content {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mp-card-text {
+  font-size: 1.00rem;
+  font-weight: 700;
+  color: #1a0e3a;
+  text-align: center;
+  line-height: 1.35;
+  word-break: keep-all;
+  white-space: pre-wrap;
+}
+
+.mp-card-text.is-code {
+  font-family: 'Consolas', 'Fira Code', 'Courier New', monospace;
+  font-size: 0.58rem;
+  font-weight: 500;
+  background: #1a0e3a;
+  color: #ffd60a;
+  padding: 4px 5px;
+  border-radius: 6px;
+  width: 100%;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.mp-card-mini {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  margin-top: 2px;
+  flex-shrink: 0;
+  opacity: 0.72;
+}
+
+/* ══════════════════════════════════════════
+   HINT
+══════════════════════════════════════════ */
+.mp-hint {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(26, 20, 48, 0.85);
+  border: 1px solid var(--mp-border);
+  border-radius: var(--mp-radius-lg);
+  padding: 5px 12px;
+  margin-top: 5px;
+  font-size: 0.68rem;
+  color: var(--mp-text-dim);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(6px);
+  flex-shrink: 0;
+}
+
+.mp-hint strong {
+  color: var(--mp-white);
+}
+
+/* ══════════════════════════════════════════
+   WIN MODAL
+══════════════════════════════════════════ */
+.mp-modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 3, 15, 0.82);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mp-modal {
+  background: #fff;
+  border: 1.5px solid rgba(155, 93, 229, 0.5);
+  border-radius: 28px;
+  padding: 40px 36px 34px;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  margin: 0 auto;
+  box-shadow: 0 0 60px rgba(123, 47, 247, 0.4), 0 24px 48px rgba(0, 0, 0, 0.5);
+  animation: mpPopIn 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes mpPopIn {
+  from {
+    transform: scale(0.65);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.mp-modal-char {
+  width: 86px;
+  height: 86px;
+  object-fit: contain;
+  margin: 0 auto 14px;
+  display: block;
+  filter: drop-shadow(0 0 16px rgba(155, 93, 229, 0.8));
+  animation: mpFloat 3s ease-in-out infinite;
+}
+
+.mp-modal-title {
+  font-size: 1.75rem;
+  font-weight: 900;
+  background: none;
+  color: #000;
+  -webkit-text-fill-color: #000;
+  margin-bottom: 4px;
+}
+
+.mp-modal-sub {
+  font-size: 0.83rem;
+  color: #000;
+  margin-bottom: 22px;
+}
+
+.mp-modal-stats {
+  display: flex;
+  gap: 12px;
+  margin: 0 auto 24px;
+}
+
+.mp-modal-stat {
+  flex: 1;
+  background: #fff;
+  border: 1.5px solid #7F77DD;
+  border-radius: var(--mp-radius-lg);
+  padding: 12px 10px;
+}
+
+.mp-modal-stat-label {
+  font-size: 0.6rem;
+  color: #7F77DD;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.mp-modal-stat-val {
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: #7F77DD;
+}
+
+.mp-modal-reward {
+  color: #000;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mp-btn-play-again {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background: #7F77DD;
+  border: none;
+  border-radius: var(--mp-radius-lg);
+  padding: 14px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.5);
+  transition: transform 0.15s;
+}
+
+.mp-btn-play-again:hover {
+  transform: translateY(-2px);
+}
+
+.mp-btn-play-again:active {
+  transform: scale(0.97);
+}
+
+.mp-btn-to-list {
+  width: 100%;
+  margin: 10px auto 0;
+  background: #fff;
+  border: 1.5px solid #d9d6f2;
+  border-radius: var(--mp-radius-lg);
+  padding: 11px;
+  color: #5f57c8;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.mp-btn-to-list:hover {
+  color: #534AB7;
+  border-color: #c4bfee;
+  background: #fff;
+}
+
+/* ══════════════════════════════════════════
+   CHARACTER PICKER MODAL
+══════════════════════════════════════════ */
+.mp-char-modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 3, 15, 0.88);
+  backdrop-filter: blur(8px);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mp-char-modal {
+  background: linear-gradient(160deg, #1e154a 0%, #2d1b5e 100%);
+  border: 1.5px solid rgba(155, 93, 229, 0.5);
+  border-radius: 24px;
+  padding: 28px 24px 22px;
+  text-align: center;
+  width: 88%;
+  max-width: 340px;
+  box-shadow: 0 0 60px rgba(123, 47, 247, 0.4);
+  animation: mpPopIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mp-char-modal-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--mp-white);
+  margin-bottom: 4px;
+}
+
+.mp-char-modal-sub {
+  font-size: 0.72rem;
+  color: var(--mp-text-dim);
+  margin-bottom: 18px;
+}
+
+.mp-char-grid-pick {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.mp-char-option {
+  background: rgba(15, 12, 27, 0.6);
+  border: 2px solid var(--mp-border);
+  border-radius: 16px;
+  padding: 14px 10px 10px;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.mp-char-option:hover {
+  transform: translateY(-2px);
+  border-color: var(--mp-purple-soft);
+}
+
+.mp-char-option.selected {
+  border-color: var(--mp-purple-neon);
+  background: rgba(155, 93, 229, 0.15);
+}
+
+.mp-char-option img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(155, 93, 229, 0.6));
+}
+
+.mp-char-option-name {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--mp-white);
+}
+
+.mp-btn-char-confirm {
+  width: 100%;
+  background: linear-gradient(135deg, #7b2ff7 0%, #c77dff 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 11px;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.mp-btn-char-confirm:hover {
+  transform: translateY(-2px);
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 400px) {
+  .mp-grid {
+    gap: 5px;
+  }
+
+  .mp-hero-char {
+    width: 50px;
+    height: 50px;
+  }
+
+  .mp-card-text {
+    font-size: 0.58rem;
+  }
+
+  .mp-card-text.is-code {
+    font-size: 0.52rem;
+  }
+
+  .mp-dash-val {
+    font-size: 0.9rem;
+  }
+
+  .mp-btn-restart {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+  }
+}
+
+/* ══════════════════════════════════════════
+   PREVIEW COUNTDOWN OVERLAY
+   ══════════════════════════════════════════ */
+.mp-countdown-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* 차분하고 세련된 미니멀 다크 모드 뱃지 디자인 - 퍼플 톤 단독 조화 (스케일 업) */
+.mp-countdown-box {
+  background: #141029;
+  /* 주변 퍼플 테마와 잘 녹아드는 다크 바이올렛 배경 */
+  border: 2px solid var(--mp-purple-soft);
+  /* 테두리를 네온 보라색 컬러로 변경 */
+  box-shadow:
+    0 10px 40px rgba(15, 12, 27, 0.85),
+    /* 깊이감 있는 어두운 그림자 강화 */
+    0 0 20px var(--mp-purple-glow),
+    /* 은은한 네온 보라빛 글로우 광채 발산 */
+    inset 0 0 15px rgba(155, 93, 229, 0.15);
+  /* 안쪽에도 은은한 퍼플 음영 추가 */
+  padding: 24px 64px;
+  /* 세로 패딩을 16px에서 24px로 더 키워 세로 길이를 확장 */
+  border-radius: 18px;
+  /* 크기 확대에 맞게 모서리 라운딩도 소폭 자연스럽게 조절 */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  /* 텍스트와 숫자 간격 확대 */
+  width: auto;
+  min-width: 440px;
+  /* 가로 최소 너비를 440px로 늘려 묵직하게 큰 배너 감각으로 */
+  /* 박스가 들썩이지 않도록 고정 (animation 제거) */
+}
+
+.mp-countdown-label {
+  font-family: 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  font-size: 1.7rem;
+  /* 글꼴 크기를 1.35rem에서 1.7rem으로 확대 */
+  font-weight: 700;
+  /* 뒤의 카드 텍스트 두께(700)와 일치시킴 */
+  color: var(--mp-white);
+  /* 깔끔하고 선명한 오프화이트 텍스트 */
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.mp-countdown-num {
+  font-family: 'Consolas', 'Segoe UI', sans-serif;
+  font-size: 1.95rem;
+  /* 숫자 크기 비율에 맞춰 스케일 업 */
+  font-weight: 900;
+  color: var(--mp-purple-soft);
+  /* 보라색 계열로 연동 */
+  background: transparent;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  display: inline-block;
+  box-shrink: 0;
+  box-shadow: none;
+  text-shadow: 0 0 12px var(--mp-purple-glow);
+  /* 보라색 글로우 */
+  line-height: 1;
+  animation: mpCountdownNumPop 0.3s ease-out;
+  /* 숫자가 마운트/변경될 때마다 팝 효과 실행 */
+}
+
+/* 첫 1초 인트로 전용 배너 스타일 */
+.mp-countdown-box.is-intro {
+  min-width: 440px;
+  /* 기존 고정 타이머 박스 너비와 완벽 대칭 */
+  padding: 24px 0;
+  /* 좌우 패딩을 0으로 설정하여 내부 텍스트가 정확히 정중앙에 고정되게 함 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: mpCountdownIntroFade 1s forwards;
+}
+
+@keyframes mpCountdownIntroFade {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  20% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  80% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* 화면 정중앙에서 박스 없이 크게 뿜어져 나오는 5 4 3 2 1 카운트 숫자 */
+.mp-countdown-center-num {
+  font-family: 'Orbitron', 'Consolas', 'Fira Code', sans-serif;
+  font-size: 3.5rem;
+  /* 정중앙 대형 사이즈 축소 */
+  font-weight: 900;
+  color: #ffffff;
+  /* 에이런 감성: 흰색 글자 */
+  opacity: 0.3;
+  /* 반투명 0.3 설정 */
+  text-shadow:
+    0 0 30px rgba(100, 200, 255, 0.8),
+    0 4px 15px rgba(0, 0, 0, 0.6),
+    2px 2px 0px #1166cc;
+  /* 에이런 감성: 블루 글로우 & 아웃라인 */
+  line-height: 1;
+  text-align: center;
+  animation: mpCountdownNumPopCenter 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* START! 텍스트도 카운트다운 대형 숫자와 동일한 자이언트 크기 및 퍼플 색상으로 렌더링 */
+.mp-countdown-center-num.is-start-text {
+  font-size: 3.5rem;
+  /* START! 글자 길이를 감안해 최적화한 사이즈 축소 */
+  color: #c77dff;
+  /* 퍼플 계열 색상으로 설정 */
+  opacity: 0.3;
+  /* 반투명 0.3 설정 */
+  text-shadow:
+    0 0 30px rgba(155, 93, 229, 0.8),
+    0 4px 15px rgba(0, 0, 0, 0.7),
+    2px 2px 0px #5e17eb;
+  /* 테두리와 글로우는 퍼플 계열 유지 */
+  letter-spacing: 2px;
+}
+
+/* 화면 중앙 대형 숫자가 터지는 팝 모션 */
+@keyframes mpCountdownNumPopCenter {
+  0% {
+    transform: scale(2.2);
+    opacity: 0.1;
+    filter: blur(5px);
+  }
+
+  30% {
+    transform: scale(0.9);
+    opacity: 0.9;
+    filter: blur(0px);
+  }
+
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  85% {
+    transform: scale(1.0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.85);
+    opacity: 0.3;
+  }
+
+  /* 서서히 잦아들며 1초 마무리 */
+}
+
+/* 박스 외부 하단으로 튕겨나가 큼직하게 연출되는 플로팅 숫자 스타일 */
+.mp-countdown-num-float {
+  position: absolute;
+  bottom: -68px;
+  /* 바깥으로 나가되, 화면 밖으로 넘치지 않게 박스 바로 아래로 높이 상향 */
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Orbitron', 'Consolas', 'Fira Code', sans-serif;
+  font-size: 4.5rem;
+  /* 화면 밖으로 넘치지 않는 최적의 큰 크기 */
+  font-weight: 900;
+  color: var(--mp-yellow);
+  text-shadow:
+    0 0 25px rgba(255, 214, 10, 0.85),
+    0 4px 12px rgba(0, 0, 0, 0.7);
+  line-height: 1;
+  animation: mpCountdownNumGiantPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mp-countdown-num.is-start {
+  color: #ffb703;
+  /* 골드 계열과 자연스럽게 매칭되는 밝고 따뜻한 옐로우 골드 */
+  font-size: 2.1rem;
+  /* START! 크기도 크게 확대 */
+  letter-spacing: 3px;
+  text-shadow: 0 0 16px rgba(255, 183, 3, 0.85);
+  box-shadow: none;
+  animation: mpCountdownNumPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 숫자 변경 시 튀어나오는 듯한 팝 애니메이션 */
+@keyframes mpCountdownNumPop {
+  0% {
+    transform: scale(1.6);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes mpCountdownNumGiantPop {
+  0% {
+    transform: translateX(-50%) scale(1.8);
+    opacity: 0.2;
+  }
+
+  50% {
+    transform: translateX(-50%) scale(0.9);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translateX(-50%) scale(1.0);
+    opacity: 1;
+  }
+}

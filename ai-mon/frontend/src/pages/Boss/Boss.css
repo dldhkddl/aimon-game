@@ -1,0 +1,183 @@
+/* ══════════════════════════════════════
+   Boss 페이지 공통
+   ══════════════════════════════════════ */
+
+.boss-loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.boss-page {
+  padding-bottom: 4rem;
+  background: #EAE6F8;
+  min-height: 100vh;
+  background: #F4F3FA;
+  max-width: 480px;
+  margin: 0 auto;
+}
+body:has(.boss-page) { background: #F4F3FA; background-image: none; }
+
+
+.boss-header {
+  padding: 1rem;
+}
+
+.boss-header-battle {
+  padding: 0.75rem 1rem 0.5rem;
+}
+
+.boss-container {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.boss-container-battle {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+/* Intro / Result 카드 */
+.boss-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem 1.25rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.boss-avatar {
+  display: flex;
+  justify-content: center;
+}
+.boss-avatar img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.boss-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1A1A2E;
+}
+
+.boss-desc {
+  font-size: 0.875rem;
+  color: #7A7A94;
+  line-height: 1.6;
+}
+
+.pulse-btn {
+  animation: pulse-red 2s infinite;
+  background: #ef4444 !important;
+  border-color: #ef4444 !important;
+}
+@keyframes pulse-red {
+  0%   { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+  70%  { box-shadow: 0 0 0 10px rgba(239,68,68,0); }
+  100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+}
+
+/* Result */
+.result-crown { display: flex; justify-content: center; }
+.result-crown img { width: 200px; height: 200px; object-fit: contain; }
+.result-rewards { display: flex; flex-direction: column; gap: 0.5rem; margin: 0.5rem 0; }
+.reward-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: rgba(255,255,255,0.05);
+  padding: 0.75rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* ── 애니메이션 ── */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+.shake { animation: shake 0.4s ease; }
+
+@keyframes boss-shake {
+  0%   { transform: translateX(0) rotate(0deg); }
+  20%  { transform: translateX(-10px) rotate(-3deg); }
+  40%  { transform: translateX(10px) rotate(3deg); }
+  60%  { transform: translateX(-8px) rotate(-2deg); }
+  80%  { transform: translateX(8px) rotate(2deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+.boss-shake { animation: boss-shake 0.5s ease; }
+
+@keyframes my-shake {
+  0%, 100% { transform: translateY(0); }
+  25%       { transform: translateY(-6px); }
+  75%       { transform: translateY(4px); }
+}
+.my-shake { animation: my-shake 0.5s ease; }
+
+@keyframes screen-shake {
+  0%   { transform: translate(0, 0); }
+  10%  { transform: translate(-6px, -4px); }
+  20%  { transform: translate(6px, 4px); }
+  30%  { transform: translate(-5px, 3px); }
+  40%  { transform: translate(5px, -3px); }
+  60%  { transform: translate(4px, -2px); }
+  80%  { transform: translate(3px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+.screen-shake {
+  animation: screen-shake 0.6s ease;
+  outline: 2px solid rgba(239,68,68,0.5);
+  outline-offset: -2px;
+}
+
+.quiz-attack-wrap { transform-origin: center center; }
+@keyframes attack-fly {
+  0%   { transform: translate(0, 0) scale(1);               opacity: 1; }
+  60%  { transform: translate(110px, -180px) scale(0.35);  opacity: 0.8; }
+  100% { transform: translate(180px, -300px) scale(0.05);  opacity: 0; }
+}
+.quiz-attack-wrap.attack-fly {
+  animation: attack-fly 0.5s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes dmg-float {
+  0%   { transform: translateX(-50%) translateY(0) scale(1);       opacity: 1; }
+  40%  { transform: translateX(-50%) translateY(-20px) scale(1.3); opacity: 1; }
+  100% { transform: translateX(-50%) translateY(-50px) scale(0.8); opacity: 0; }
+}
+.dmg-popup {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #f9e2af;
+  text-shadow: 0 0 10px rgba(249,226,175,0.8), 0 2px 4px rgba(0,0,0,0.6);
+  pointer-events: none;
+  animation: dmg-float 0.8s ease forwards;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* boss-hit 플래시 */
+@keyframes boss-hit-flash {
+  0%   { filter: brightness(1) drop-shadow(0 4px 16px rgba(83,74,183,0.3)); }
+  30%  { filter: brightness(3) drop-shadow(0 0 20px rgba(239,68,68,0.8)); }
+  100% { filter: brightness(1) drop-shadow(0 4px 16px rgba(83,74,183,0.3)); }
+}
+.boss-hit { animation: boss-hit-flash 0.4s ease; }
+

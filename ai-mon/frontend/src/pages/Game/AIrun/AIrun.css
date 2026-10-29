@@ -1,0 +1,627 @@
+/* 다른 게임들과 동일하게 가로폭을 앱 프레임(480px)으로 고정 —
+   전체화면(넓은 데스크톱 창)에서도 가로로 늘어나지 않도록 */
+.runner-game-wrapper {
+  width: 100%;
+  max-width: 480px;
+  height: 100vh;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #55b5f0;
+  position: relative;
+}
+
+.rg-back-btn {
+  position: absolute;
+  top: clamp(6px, 2vw, 14px);
+  left: clamp(8px, 2vw, 16px);
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.85);
+  color: #3388cc;
+  border: clamp(1px, 0.3vw, 2px) solid #66bbee;
+  border-radius: 20px;
+  padding: clamp(5px, 1.4vw, 10px) clamp(12px, 3.2vw, 24px);
+  font-size: clamp(10px, 2vw, 14px);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  white-space: nowrap;
+}
+
+.rg-back-btn:hover {
+  background: #e8f6ff;
+  transform: scale(1.04);
+}
+
+.runner-game-mount {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.runner-game-mount canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* HUD */
+.rg-hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.rg-hp {
+  position: absolute;
+  top: clamp(6px, 2vw, 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(16px, 4.5vw, 38px);
+  letter-spacing: clamp(2px, 1vw, 6px);
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.45));
+  white-space: nowrap;
+  max-width: 40vw;
+  overflow: hidden;
+  z-index: 5;
+}
+
+/* 상단 왼쪽: 스코어 + 거리 (뒤로가기 버튼 아래) */
+.rg-hud-tl {
+  position: absolute;
+  top: clamp(46px, 11vw, 68px);
+  left: clamp(8px, 2.5vw, 22px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3px, 1vw, 6px);
+}
+
+/* 상단 오른쪽: 볼륨 + 아침/저녁 토글 */
+.rg-hud-tr {
+  position: absolute;
+  top: clamp(8px, 2.5vw, 24px);
+  right: clamp(6px, 2vw, 18px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: clamp(6px, 1.5vw, 10px);
+  pointer-events: all;
+  z-index: 30;
+}
+
+/* 하단 왼쪽: 방향키 토글 */
+.rg-hud-bl-controls {
+  position: absolute;
+  bottom: clamp(16px, 4vw, 32px);
+  left: clamp(12px, 3vw, 28px);
+  display: flex;
+  gap: clamp(10px, 2.5vw, 16px);
+  pointer-events: all;
+}
+
+.rg-dir-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.65);
+  background: rgba(255,255,255,0.35);
+  color: #fff;
+  font-size: 28px;
+  font-weight: 900;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  transition: transform 0.1s, background 0.15s, width 0.15s, height 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+/* 태블릿 이하: 방향키 버튼 축소 */
+@media (max-width: 768px) {
+  .rg-dir-btn {
+    width: 52px;
+    height: 52px;
+    font-size: 22px;
+  }
+}
+
+/* 모바일: 방향키 버튼 더 축소 */
+@media (max-width: 480px) {
+  .rg-dir-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+  }
+}
+
+.rg-dir-btn:active {
+  transform: scale(0.9);
+  background: rgba(255,255,255,0.55);
+}
+
+/* 하단 오른쪽: 점프 */
+.rg-hud-br-controls {
+  position: absolute;
+  bottom: clamp(16px, 4vw, 32px);
+  right: clamp(12px, 3vw, 28px);
+  pointer-events: all;
+}
+
+.rg-jump-btn {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 200, 80, 0.85);
+  background: linear-gradient(135deg, #ffd060, #ff8833);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.3;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(255,140,0,0.45);
+  transition: transform 0.1s, box-shadow 0.15s, width 0.15s, height 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+/* 태블릿 이하: 점프 버튼 축소 */
+@media (max-width: 768px) {
+  .rg-jump-btn {
+    width: 68px;
+    height: 68px;
+    font-size: 12px;
+  }
+}
+
+/* 모바일: 점프 버튼 더 축소 */
+@media (max-width: 480px) {
+  .rg-jump-btn {
+    width: 54px;
+    height: 54px;
+    font-size: 10px;
+  }
+}
+
+.rg-jump-btn:active {
+  transform: scale(0.9);
+  box-shadow: 0 2px 8px rgba(255,140,0,0.6);
+}
+
+.rg-volume-ctrl {
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 1vw, 8px);
+  pointer-events: all;
+  background: rgba(255, 255, 255, 0.75);
+  padding: clamp(3px, 1vw, 6px) clamp(8px, 2vw, 14px);
+  border-radius: 20px;
+  border: 1.5px solid rgba(100,180,255,0.5);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.rg-vol-icon {
+  font-size: clamp(16px, 4vw, 28px);
+  cursor: pointer;
+  line-height: 1;
+  transition: transform 0.1s;
+}
+
+.rg-vol-icon:hover {
+  transform: scale(1.12);
+}
+
+.rg-vol-icon:active {
+  transform: scale(0.92);
+}
+
+.rg-ctrl-divider {
+  color: rgba(100, 160, 220, 0.5);
+  font-size: clamp(12px, 2.5vw, 18px);
+  line-height: 1;
+  margin: 0 2px;
+}
+
+.rg-time-btn {
+  background: linear-gradient(135deg, #ffd060, #ff8833);
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-size: clamp(9px, 2vw, 13px);
+  font-weight: 700;
+  padding: clamp(3px, 1vw, 5px) clamp(7px, 2vw, 12px);
+  cursor: pointer;
+  pointer-events: all;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(255, 140, 0, 0.35);
+  transition: transform 0.1s, box-shadow 0.15s;
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+}
+
+.rg-time-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 4px 14px rgba(255, 140, 0, 0.55);
+}
+
+.rg-vol-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: clamp(50px, 12vw, 90px);
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(to right, #66ccff, #cceeff);
+  outline: none;
+  cursor: pointer;
+}
+
+.rg-vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: clamp(11px, 2.5vw, 16px);
+  height: clamp(11px, 2.5vw, 16px);
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #55aaee;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.rg-vol-slider::-moz-range-thumb {
+  width: clamp(10px, 2.2vw, 14px);
+  height: clamp(10px, 2.2vw, 14px);
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #55aaee;
+  cursor: pointer;
+}
+
+.rg-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+  background: rgba(255, 255, 255, 0.75);
+  padding: clamp(3px, 1vw, 6px) clamp(8px, 2vw, 14px) clamp(4px, 1.2vw, 8px);
+  border-radius: 14px;
+  border: 1.5px solid rgba(100,180,255,0.4);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+}
+
+.rg-stat-label {
+  font-size: clamp(9px, 2vw, 13px);
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #3388cc;
+  margin-bottom: 2px;
+}
+
+.rg-stat-val {
+  font-size: clamp(28px, 8vw, 64px);
+  font-weight: 900;
+  color: #ff4488;
+  text-shadow: 0 2px 8px rgba(255, 68, 136, 0.35);
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  letter-spacing: -1px;
+}
+
+.rg-stat-unit {
+  font-size: clamp(11px, 2.5vw, 20px);
+  font-weight: 700;
+  color: #55aaee;
+  margin-left: 2px;
+}
+
+/* Overlay */
+.rg-overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  background: rgba(0, 60, 140, 0.3);
+  backdrop-filter: blur(6px);
+}
+
+/* 패널 — 카트라이더 감성 */
+.rg-icon {
+  width: clamp(48px, 12vw, 80px);
+  height: clamp(48px, 12vw, 80px);
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 12px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+}
+
+.rg-panel {
+  background: #fff;
+  border: 1.5px solid rgba(127, 119, 221, 0.5);
+  border-radius: 24px;
+  padding: clamp(20px, 5vw, 36px) clamp(24px, 6vw, 46px);
+  text-align: center;
+  box-shadow: 0 24px 48px rgba(127, 119, 221, 0.18);
+  max-width: 460px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.rg-title {
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  font-size: clamp(24px, 6vw, 38px);
+  font-weight: 900;
+  color: #7F77DD;
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 0 rgba(127,119,221,0.18);
+}
+
+.rg-subtitle {
+  color: #7F77DD;
+  font-size: clamp(11px, 2.5vw, 14px);
+  margin-bottom: 24px;
+}
+
+.rg-controls {
+  color: #5f57c8;
+  font-size: 14px;
+  line-height: 2.2;
+  margin: 0 auto 26px;
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  background: rgba(127,119,221,0.08);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+
+.rg-btn {
+  background: #7F77DD;
+  border: none;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  padding: 13px 42px;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  transition: transform 0.1s, box-shadow 0.2s;
+  box-shadow: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rg-btn:hover {
+  transform: scale(1.05);
+  box-shadow: none;
+  opacity: 0.92;
+}
+
+.rg-score-final {
+  color: #334;
+  font-size: 19px;
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.rg-result-panel {
+  background: #fff;
+  border: 1.5px solid rgba(127, 119, 221, 0.5);
+  box-shadow: 0 24px 48px rgba(127, 119, 221, 0.18);
+}
+
+.rg-result-title {
+  color: #ff1f1f;
+  letter-spacing: 2px;
+  text-shadow:
+    0 2px 0 #8f0000,
+    0 0 14px rgba(255, 31, 31, 0.6),
+    0 0 28px rgba(255, 90, 60, 0.35);
+}
+
+.rg-result-panel .rg-score-final {
+  color: #7F77DD;
+}
+
+.rg-result-panel .rg-score-final strong {
+  color: #7F77DD;
+}
+
+.rg-reward-info {
+  margin: 10px auto 0;
+  color: #000;
+  font-weight: 700;
+}
+
+.rg-result-panel .rg-btn {
+  width: 100%;
+  background: #7F77DD;
+  box-shadow: none;
+  color: #fff;
+  letter-spacing: 0;
+}
+
+.rg-result-panel .rg-btn:hover {
+  box-shadow: none;
+  opacity: 0.92;
+}
+
+.rg-result-panel .rg-btn-danger {
+  background: #fff;
+  border: 1.5px solid #d9d6f2;
+  color: #5f57c8;
+}
+
+.rg-result-panel .rg-btn-danger:hover {
+  background: #fff;
+  border-color: #c4bfee;
+  color: #534AB7;
+}
+
+/* Quiz Panel */
+.rg-quiz-panel {
+  background: linear-gradient(160deg, #fff 0%, #eef8ff 100%);
+  border: 3px solid #66ccff;
+  border-radius: 24px;
+  padding: 32px 40px;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0,100,220,0.18);
+  max-width: 540px;
+  width: 92%;
+}
+
+.rg-quiz-label {
+  font-size: 14px;
+  color: #1177cc;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.rg-quiz-q {
+  color: #223;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.65;
+  margin-bottom: 26px;
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  background: rgba(100,180,255,0.1);
+  padding: 18px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(85,170,238,0.3);
+  border-left: 3px solid #55aaee;
+  text-align: left;
+}
+
+.rg-quiz-btns {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.rg-quiz-o, .rg-quiz-x {
+  padding: 14px 44px;
+  font-size: 22px;
+  font-weight: 900;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.15s;
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+}
+
+.rg-quiz-o {
+  background: linear-gradient(135deg, #55ddaa, #22aa66);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(34,170,102,0.4);
+}
+
+.rg-quiz-o:hover {
+  transform: scale(1.07);
+  box-shadow: 0 6px 22px rgba(34,170,102,0.6);
+}
+
+.rg-quiz-x {
+  background: linear-gradient(135deg, #ff6677, #cc1133);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(204,17,51,0.4);
+}
+
+.rg-quiz-x:hover {
+  transform: scale(1.07);
+  box-shadow: 0 6px 22px rgba(204,17,51,0.6);
+}
+
+.rg-quiz-hint {
+  color: #99aacc;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+/* Result */
+.rg-result {
+  padding: 40px 56px;
+  border-radius: 22px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 900;
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  animation: rg-pop 0.3s ease-out;
+}
+
+.rg-result.correct {
+  background: linear-gradient(160deg, #eaffef, #d0f5e0);
+  border: 3px solid #33cc77;
+  box-shadow: 0 8px 32px rgba(34,170,102,0.2);
+  color: #117744;
+}
+
+.rg-result.wrong {
+  background: linear-gradient(160deg, #fff0f2, #ffe0e5);
+  border: 3px solid #ff4466;
+  box-shadow: 0 8px 32px rgba(204,17,51,0.2);
+  color: #cc1133;
+}
+
+.rg-result-icon {
+  font-size: 56px;
+  margin-bottom: 8px;
+}
+
+.rg-result-sub {
+  font-size: 15px;
+  color: #778899;
+  margin-top: 8px;
+  font-weight: 400;
+}
+
+@keyframes rg-pop {
+  0% { transform: scale(0.75); opacity: 0; }
+  60% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.rg-panel .rg-btn + .rg-btn {
+  margin-top: 12px;
+}
+
+.rg-btn-danger {
+  background: linear-gradient(135deg, #ff6677, #cc1133);
+  box-shadow: 0 4px 16px rgba(204,17,51,0.4);
+}
+
+.rg-btn-danger:hover {
+  box-shadow: 0 6px 24px rgba(204,17,51,0.6);
+}
+
+/* ── 카운트다운 ─────────────────────────────── */
+.rg-countdown {
+  font-size: 140px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow:
+    0 0 40px rgba(100,200,255,0.8),
+    0 4px 20px rgba(0,0,0,0.6),
+    3px 3px 0 #1166cc;
+  animation: rg-countdown-pop 0.9s ease-out forwards;
+  letter-spacing: -4px;
+}
+
+.rg-countdown-go {
+  font-size: 100px;
+  color: #44ffcc;
+  text-shadow:
+    0 0 40px rgba(68,255,204,0.8),
+    0 4px 20px rgba(0,0,0,0.7),
+    3px 3px 0 #117755;
+  letter-spacing: 4px;
+}
+
+@keyframes rg-countdown-pop {
+  0%   { transform: scale(1.6); opacity: 0; }
+  30%  { transform: scale(0.95); opacity: 1; }
+  70%  { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.7); opacity: 0; }
+}

@@ -1,0 +1,704 @@
+/* =============================================
+   AI MON — Global Design System
+   ============================================= */
+
+/* --- Google Fonts Import (backup) --- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+/* --- CSS Custom Properties --- */
+:root {
+  /* Color Palette */
+  --clr-bg:          #F4F3FA;
+  --clr-bg-2:        #EEEDFE;
+  --clr-bg-card:     #FFFFFF;
+  --clr-border:      #E2E1EE;
+
+  --clr-primary:     #7F77DD;
+  --clr-primary-lt:  #A9A4E8;
+  --clr-primary-dk:  #534AB7;
+  --clr-secondary:   #06b6d4;
+  --clr-accent:      #7F77DD;
+  --clr-success:     #10b981;
+  --clr-danger:      #ef4444;
+  --clr-warning:     #f59e0b;
+
+  --clr-text:        #1A1A2E;
+  --clr-text-muted:  #7A7A94;
+  --clr-text-faint:  #9999B0;
+
+  /* Gradients */
+  --grad-primary:    linear-gradient(135deg, #7F77DD 0%, #534AB7 100%);
+  --grad-boss:       linear-gradient(135deg, #ef4444 0%, #f59e0b 100%);
+  --grad-card:       #FFFFFF;
+  --grad-bg:         #F4F3FA;
+
+  /* Typography */
+  --font-main:       'Outfit', 'Noto Sans KR', sans-serif;
+  --font-size-xs:    0.75rem;
+  --font-size-sm:    0.875rem;
+  --font-size-md:    1rem;
+  --font-size-lg:    1.125rem;
+  --font-size-xl:    1.25rem;
+  --font-size-2xl:   1.5rem;
+  --font-size-3xl:   1.875rem;
+  --font-size-4xl:   2.25rem;
+
+  /* Spacing */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.25rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+
+  /* Radius */
+  --radius-sm:  0.5rem;
+  --radius-md:  0.75rem;
+  --radius-lg:  1rem;
+  --radius-xl:  1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-glow-primary: 0 0 20px rgba(127,119,221,0.16);
+  --shadow-glow-cyan:    0 0 20px rgba(6,182,212,0.14);
+  --shadow-glow-boss:    0 0 24px rgba(239, 68, 68, 0.28);
+  --shadow-card:         0 12px 32px rgba(26,26,46,0.08);
+  --shadow-control:      0 0 0 1px rgba(83,74,183,0.10);
+  --shadow-control-hover:0 0 0 3px rgba(127,119,221,0.10);
+
+  /* Transitions */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms ease;
+
+  /* Z-index */
+  --z-nav:    100;
+  --z-modal:  200;
+  --z-toast:  300;
+
+  /* === Redesign tokens (Egyptian temple ✕ neon cyber) ===
+     색 토큰은 테마 변수(secondary/primary/accent)에서 파생 → 9개 테마 자동 연동.
+     구조/형태 토큰은 테마 무관, 여기서만 정의. */
+  --grad-neon-line: linear-gradient(90deg, #7F77DD 0%, #534AB7 100%);
+  --clr-gold-glow:  color-mix(in srgb, var(--clr-accent) 55%, transparent);
+  --clr-glyph:      color-mix(in srgb, var(--clr-accent) 7%,  transparent);
+  --clr-glyph-soft: color-mix(in srgb, var(--clr-accent) 4%,  transparent);
+  --halo-radial:    radial-gradient(circle,
+                      color-mix(in srgb, var(--clr-accent) 35%, transparent) 0%,
+                      transparent 70%);
+
+  /* 형태 토큰 (테마 무관, :root 공유) */
+  --radius-blob: 46% 54% 57% 43% / 52% 46% 54% 48%;
+  --glass-blur:  16px;
+  --bevel-top:   inset 0 0 0 rgba(255,255,255,0);
+  --bevel-bottom:inset 0 0 0 rgba(26,26,46,0);
+}
+
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-main);
+  font-size: var(--font-size-md);
+  color: var(--clr-text);
+  background: #F4F3FA;
+  background-image: none;
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Animated stars background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.12) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Carved-stone temple columns + hieroglyph cartouche texture (subtle, themed) */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg,
+      var(--clr-glyph) 0 2px,
+      transparent 2px 120px),
+    repeating-linear-gradient(0deg,
+      var(--clr-glyph-soft) 0 1px,
+      transparent 1px 96px);
+  background-position: center;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+img, video, svg { display: block; max-width: 100%; }
+button { cursor: pointer; border: none; background: none; font: inherit; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+input, textarea, select { font: inherit; }
+
+/* --- Typography Utilities --- */
+.text-xs    { font-size: var(--font-size-xs); }
+.text-sm    { font-size: var(--font-size-sm); }
+.text-lg    { font-size: var(--font-size-lg); }
+.text-xl    { font-size: var(--font-size-xl); }
+.text-2xl   { font-size: var(--font-size-2xl); }
+.text-3xl   { font-size: var(--font-size-3xl); }
+.text-muted { color: var(--clr-text-muted); }
+.text-center { text-align: center; }
+.font-bold  { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+
+/* --- Shared Locked Screen --- */
+.app-locked-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 75vh;
+  padding: 2rem 1rem;
+}
+
+.app-locked-card.app-locked-card {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  min-height: 360px;
+  padding: 3.5rem 2rem;
+  margin: 0 auto;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.app-locked-close.app-locked-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: var(--clr-text-muted);
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 4px;
+}
+
+.app-locked-icon.app-locked-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 20px rgba(124,58,237,0.3);
+}
+
+.app-locked-title.app-locked-title {
+  color: var(--clr-text-bright, var(--clr-text));
+  margin-bottom: 0.8rem;
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.app-locked-desc.app-locked-desc {
+  color: var(--clr-text-muted);
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+  font-size: 0.95rem;
+}
+
+
+/* --- Button System --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-6);
+  border: 1px solid rgba(83,74,183,0.12);
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: var(--font-size-md);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  background: rgba(255,255,255,0.86);
+  box-shadow: var(--shadow-control);
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.btn:hover {
+  border-color: rgba(83,74,183,0.22);
+  box-shadow: var(--shadow-control-hover);
+  transform: none;
+}
+.btn:hover::after { opacity: 1; }
+.btn:active { transform: translateY(0) scale(0.99); }
+
+.btn-primary {
+  background: var(--grad-primary);
+  color: #fff;
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 0 0 0 1px rgba(127,119,221,0.14);
+}
+.btn-primary:hover {
+  box-shadow: 0 0 0 3px rgba(127,119,221,0.14);
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(83,74,183,0.22);
+  color: var(--clr-primary-dk);
+}
+.btn-secondary:hover { background: rgba(127,119,221,0.08); }
+
+.btn-danger {
+  background: var(--grad-boss);
+  color: #fff;
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 0 0 0 1px rgba(239,68,68,0.14);
+}
+
+.btn-ghost {
+  background: rgba(255,255,255,0.7);
+  color: var(--clr-text-muted);
+  border: 1px solid var(--clr-border);
+}
+.btn-ghost:hover { background: #fff; color: var(--clr-text); }
+
+.btn-sm { padding: var(--sp-2) var(--sp-4); font-size: var(--font-size-sm); }
+.btn-lg { padding: var(--sp-4) var(--sp-8); font-size: var(--font-size-lg); }
+.btn-full { width: 100%; }
+
+/* --- Card System --- */
+.card {
+  background: #FFFFFF !important;
+  position: relative;
+  background: var(--grad-card);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-6);
+  box-shadow: var(--shadow-card), var(--bevel-top), var(--bevel-bottom);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card), var(--shadow-glow-primary), var(--bevel-top); }
+
+.card-glass {
+  background: #FFFFFF;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-6);
+}
+
+/* --- Badge --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: 2px var(--sp-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.badge-primary { background: rgba(124,58,237,0.25); color: #c4b5fd; border: 1px solid rgba(124,58,237,0.4); }
+.badge-success { background: rgba(16,185,129,0.2);  color: #6ee7b7; border: 1px solid rgba(16,185,129,0.3); }
+.badge-danger  { background: rgba(239,68,68,0.2);   color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+.badge-warning { background: rgba(124,58,237,0.2);  color: #c4b5fd; border: 1px solid rgba(124,58,237,0.3); }
+.badge-cyan    { background: rgba(6,182,212,0.2);   color: #67e8f9; border: 1px solid rgba(6,182,212,0.3); }
+
+/* --- Progress Bar --- */
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--grad-neon-line);
+  background-size: 200% 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 12px var(--clr-gold-glow);
+  position: relative;
+}
+/* sparkle at the leading edge of the gauge */
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -2px;
+  width: 10px;
+  height: 10px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 10px 3px var(--clr-gold-glow);
+}
+
+/* --- Input --- */
+.input {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E1EE;
+  border-radius: var(--radius-md);
+  padding: var(--sp-3) var(--sp-4);
+  color: #1A1A2E;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+}
+.input:focus {
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.2);
+}
+.input::placeholder { color: var(--clr-text-faint); }
+
+/* --- Layout Utilities --- */
+.container { max-width: 640px; margin: 0 auto; padding: 0 var(--sp-4); }
+.flex       { display: flex; }
+.flex-col   { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center  { justify-content: center; }
+.gap-2 { gap: var(--sp-2); }
+.gap-3 { gap: var(--sp-3); }
+.gap-4 { gap: var(--sp-4); }
+.gap-6 { gap: var(--sp-6); }
+.w-full { width: 100%; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+
+/* --- Animation Keyframes --- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: var(--shadow-glow-primary); }
+  50%       { box-shadow: 0 0 48px rgba(124,58,237,0.7); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-6px); }
+  75%       { transform: translateX(6px); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes bob {
+  0%, 100% { transform: translateY(0px) rotate(-1deg); }
+  50%       { transform: translateY(-8px) rotate(1deg); }
+}
+@keyframes neon-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+@keyframes slide-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in-down {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+@keyframes halo-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* --- Animation Utility Classes --- */
+.animate-fade-in     { animation: fadeIn 0.4s ease forwards; }
+.animate-fade-in-up  { animation: fadeInUp 0.5s ease forwards; }
+.animate-slide-up    { animation: slide-in-up 0.45s ease forwards; }
+.animate-scale-in    { animation: scale-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+.animate-bob         { animation: bob 3s ease-in-out infinite; }
+.animate-float       { animation: float 4s ease-in-out infinite; }
+.animate-spin        { animation: spin 1s linear infinite; }
+.animate-pulse-glow  { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-neon-pulse  { animation: neon-pulse 2s ease-in-out infinite; }
+
+/* --- Scrollbar --- */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+.level-test-modal-inner::-webkit-scrollbar { display: none; }
+
+/* --- Misc Utilities --- */
+.divider {
+  height: 1px;
+  background: var(--clr-border);
+  margin: var(--sp-4) 0;
+}
+.neon-line {
+  height: 2px;
+  background: var(--grad-neon-line);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 8px var(--clr-gold-glow);
+}
+.glass-panel {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); border: 0;
+}
+/* =============================================
+   Global Flat Button Effect
+   버튼은 그림자로 띄우지 않고, 얇은 라인과 가벼운 포커스 링만 사용한다.
+   컴포넌트 CSS에 남은 강한 shadow를 확실히 덮기 위해 !important 사용.
+   ============================================= */
+button:not(:disabled):not(.auth-page *):not(.text-link-btn):not(.no-3d),
+a[class*="btn" i]:not([aria-disabled="true"]):not(.auth-page *):not(.text-link-btn):not(.no-3d),
+input[type="button"]:not(:disabled):not(.auth-page *):not(.text-link-btn):not(.no-3d),
+input[type="submit"]:not(:disabled):not(.auth-page *):not(.text-link-btn):not(.no-3d),
+[role="button"]:not([aria-disabled="true"]):not(.auth-page *):not(.text-link-btn):not(.no-3d) {
+  transform: none !important;
+  box-shadow: 0 0 0 1px rgba(83,74,183,0.10) !important;
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    box-shadow 0.12s ease !important;
+  will-change: box-shadow;
+}
+
+button:not(:disabled):not(.auth-page *):not(.text-link-btn):not(.no-3d):hover,
+a[class*="btn" i]:not([aria-disabled="true"]):not(.auth-page *):not(.text-link-btn):not(.no-3d):hover,
+input[type="button"]:not(:disabled):not(.auth-page *):not(.text-link-btn):not(.no-3d):hover,
+input[type="submit"]:not(:disabled):not(.auth-page *):not(.text-link-btn):not(.no-3d):hover,
+[role="button"]:not([aria-disabled="true"]):not(.auth-page *):not(.text-link-btn):not(.no-3d):hover {
+  transform: none !important;
+  box-shadow: 0 0 0 3px rgba(127,119,221,0.12) !important;
+}
+
+button:not(:disabled):not(.auth-page *):not(.text-link-btn):not(.no-3d):active,
+a[class*="btn" i]:not([aria-disabled="true"]):not(.auth-page *):not(.text-link-btn):not(.no-3d):active,
+input[type="button"]:not(:disabled):not(.auth-page *):not(.text-link-btn):not(.no-3d):active,
+input[type="submit"]:not(:disabled):not(.auth-page *):not(.text-link-btn):not(.no-3d):active,
+[role="button"]:not([aria-disabled="true"]):not(.auth-page *):not(.text-link-btn):not(.no-3d):active {
+  transform: none !important;
+  box-shadow: 0 0 0 2px rgba(127,119,221,0.16) !important;
+}
+
+button:disabled:not(.auth-page *):not(.text-link-btn):not(.no-3d),
+a[aria-disabled="true"]:not(.auth-page *):not(.text-link-btn):not(.no-3d),
+input[type="button"]:disabled:not(.auth-page *):not(.text-link-btn):not(.no-3d),
+input[type="submit"]:disabled:not(.auth-page *):not(.text-link-btn):not(.no-3d),
+[role="button"][aria-disabled="true"]:not(.auth-page *):not(.text-link-btn):not(.no-3d) {
+  transform: none !important;
+  box-shadow: none !important;
+  opacity: 0.55;
+  cursor: not-allowed !important;
+}
+
+/* 텍스트 링크 버튼: 3D 효과 없이 배경/그림자/이동 없는 순수 텍스트 링크로 표시 */
+.text-link-btn,
+.text-link-btn:hover,
+.text-link-btn:active,
+.text-link-btn:focus {
+  box-shadow: none !important;
+  transform: none !important;
+  background: none !important;
+}
+
+/* 범용 3D 제외 클래스: 카드형 리스트 행(row) 버튼이나 코드 토큰처럼 전체를
+   3D로 띄우면 안 되는 요소에 붙인다. 전역 3D 규칙 자체를 안 타도록 셀렉터에서
+   제외했으므로, 여기서는 기본 상태만 방어적으로 리셋하고 hover/active는
+   컴포넌트 자체 CSS(있다면)가 정상 동작하도록 건드리지 않는다. */
+.no-3d {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Hard reset for app button-like controls: no raised shadow, no 3D motion. */
+.btn,
+.auth-btn-main,
+.reg-btn-primary,
+.reg-check-dup-btn,
+.st-modal-btn,
+.st-back-btn,
+.st-save-btn,
+.st-mute-btn,
+.st-vol-btn,
+.st-logout-btn,
+.st-delete-btn,
+.char-hero-settings,
+.char-option,
+.char-save-btn,
+.char-logout-btn,
+.char-title-equip-btn,
+.char-swatch,
+.char-effect,
+.tr-today-card,
+.tr-today-btn,
+.tr-mode-card,
+.tr-level-chip,
+.tr-unit-btn,
+.tr-go-btn,
+.btp-back-btn,
+.btp-card,
+.hd-cta-btn,
+.hd-room-tool,
+.hd-room-action-btn,
+.hd-modal-close,
+.hd-shop-row-btn,
+.hd-shop-buy-btn {
+  box-shadow: 0 0 0 1px rgba(83,74,183,0.10) !important;
+  transform: none !important;
+}
+
+.btn:hover,
+.auth-btn-main:hover,
+.reg-btn-primary:hover,
+.reg-check-dup-btn:hover,
+.st-modal-btn:hover,
+.st-back-btn:hover,
+.st-save-btn:not(:disabled):hover,
+.st-mute-btn:hover,
+.st-vol-btn:hover,
+.st-logout-btn:hover,
+.st-delete-btn:hover,
+.char-hero-settings:hover,
+.char-option:not(.locked):hover,
+.char-save-btn:not(:disabled):hover,
+.char-logout-btn:hover,
+.char-title-row:not(.locked):hover .char-title-equip-btn,
+.char-swatch:not(.locked):hover,
+.char-effect:not(.locked):hover,
+.tr-today-card:hover,
+.tr-today-btn:not(:disabled):hover,
+.tr-mode-card:not(.tr-mode-locked):hover,
+.tr-level-chip:not(.locked):hover,
+.tr-unit-btn:not(:disabled):hover,
+.tr-go-btn:hover,
+.btp-back-btn:hover,
+.btp-card:not(.btp-locked):hover,
+.hd-cta-btn:hover,
+.hd-room-tool:hover:not(:disabled),
+.hd-room-action-btn:hover,
+.hd-modal-close:hover,
+.hd-shop-row-btn:hover,
+.hd-shop-buy-btn:hover:not(:disabled) {
+  box-shadow: 0 0 0 3px rgba(127,119,221,0.12) !important;
+  transform: none !important;
+}
+
+.btn:active,
+.auth-btn-main:active,
+.reg-btn-primary:active,
+.reg-check-dup-btn:active,
+.st-modal-btn:active,
+.st-back-btn:active,
+.st-save-btn:not(:disabled):active,
+.st-mute-btn:active,
+.st-vol-btn:active,
+.st-logout-btn:active,
+.st-delete-btn:active,
+.char-hero-settings:active,
+.char-option:not(.locked):active,
+.char-save-btn:not(:disabled):active,
+.char-logout-btn:active,
+.char-title-row:not(.locked):active .char-title-equip-btn,
+.char-swatch:not(.locked):active,
+.char-effect:not(.locked):active,
+.tr-today-card:active,
+.tr-today-btn:not(:disabled):active,
+.tr-mode-card:not(.tr-mode-locked):active,
+.tr-level-chip:not(.locked):active,
+.tr-unit-btn:not(:disabled):active,
+.tr-go-btn:active,
+.btp-back-btn:active,
+.btp-card:not(.btp-locked):active,
+.hd-cta-btn:active,
+.hd-room-tool:active:not(:disabled),
+.hd-room-action-btn:active,
+.hd-modal-close:active,
+.hd-shop-row-btn:active,
+.hd-shop-buy-btn:active:not(:disabled) {
+  box-shadow: 0 0 0 2px rgba(127,119,221,0.16) !important;
+  transform: none !important;
+}
+
+.btn:disabled,
+.auth-btn-main:disabled,
+.reg-btn-primary:disabled,
+.reg-check-dup-btn:disabled,
+.st-modal-btn:disabled,
+.st-save-btn:disabled,
+.st-delete-btn:disabled,
+.char-save-btn:disabled,
+.tr-today-btn:disabled,
+.hd-room-tool:disabled,
+.hd-shop-buy-btn:disabled {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+
+/* cache-bust: force Vite to re-process this module */
